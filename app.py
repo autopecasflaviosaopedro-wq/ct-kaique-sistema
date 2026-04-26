@@ -1,25 +1,23 @@
 import streamlit as st
 
-# Configuração da página - Forçando o menu lateral a abrir (expanded)
+# 1. Configuração da página - Força o menu lateral a abrir sozinho no celular
 st.set_page_config(
     page_title="Sistema CT Kaique", 
     layout="wide", 
     initial_sidebar_state="expanded"
 )
 
-# Estilização para deixar os botões grandes e bonitos
+# 2. Estilização para botões grandes (Estilo App de Celular)
 st.markdown("""
     <style>
     div.stButton > button:first-child {
         height: 100px;
         width: 100%;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
-        border-radius: 10px;
+        border-radius: 15px;
         margin-bottom: 20px;
-    }
-    .st-emotion-cache-1kyxreq {
-        justify-content: center;
+        white-space: normal;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -27,30 +25,37 @@ st.markdown("""
 st.title("🚀 Painel de Controle - CT Kaique")
 st.write("---")
 
-st.subheader("Escolha uma opção para navegar:")
+st.subheader("Escolha o que deseja gerenciar:")
 
-# Criando colunas para os botões ficarem lado a lado no PC e empilhados no Celular
+# 3. Botões de Atalho no meio da tela
 col1, col2 = st.columns(2)
 
 with col1:
-    if st.button("📂 IR PARA: CADASTRO DE ALUNOS", type="primary"):
-        st.switch_page("pages/01_Cadastro_de_Alunos.py")
+    # Botão azul chamativo para Alunos
+    if st.button("👥 IR PARA:\nCADASTRO DE ALUNOS", type="primary"):
+        try:
+            st.switch_page("pages/01_Cadastro_de_Alunos.py")
+        except:
+            st.error("Erro: Verifique se a pasta 'pages' e o arquivo '01_Cadastro_de_Alunos.py' estão no GitHub!")
 
 with col2:
-    if st.button("📅 IR PARA: GRADE DE HORÁRIOS"):
-        # Verifica se o arquivo da grade já existe antes de tentar mudar
+    # Botão para Modalidades
+    if st.button("🥋 IR PARA:\nCADASTRO MODALIDADES"):
         try:
-            st.switch_page("pages/02_Grade_de_Horários.py")
+            st.switch_page("pages/02_Cadastro_Modalidades.py")
         except:
-            st.error("O arquivo da Grade ainda não foi criado na pasta 'pages'!")
+            st.error("Erro: O arquivo '02_Cadastro_Modalidades.py' não foi encontrado na pasta 'pages'!")
 
 st.write("---")
-st.info("💡 Dica: Se preferir, use o menu lateral à esquerda para navegar.")
 
-# Pequeno resumo ou aviso
+# 4. Instruções visuais
+st.info("💡 **Dica para Celular:** Use o menu que desliza da esquerda para navegar mais rápido!")
+
 st.markdown("""
-**Instruções de uso:**
-1. Clique no botão acima para a área desejada.
-2. No **Cadastro**, você pode adicionar novos alunos e ver a lista.
-3. Na **Grade**, você define os horários e valores das aulas.
+### ℹ️ Resumo das Funções:
+* **Cadastro de Alunos:** Matrículas, presenças e dados pessoais.
+* **Cadastro Modalidades:** Gerenciar preços, modalidades (Jiu-Jitsu, Muay Thai) e horários.
 """)
+
+st.write("---")
+st.caption("Sistema CT Kaique v2.0 - Unificado")
